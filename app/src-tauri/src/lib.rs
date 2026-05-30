@@ -266,7 +266,7 @@ pub fn run() {
                                     let _ = crate::jni_cache::set_class_loader(class_loader_global);
                                 }
                                 
-                                let class_name_jstr = env.new_string("com.cameronamer.telegramdrive.MainActivity").unwrap();
+                                let class_name_jstr = env.new_string("com.shohan.telegramdrive.MainActivity").unwrap();
                                 if let Ok(main_class_obj_val) = env.call_method(
                                     &class_loader_obj,
                                     "loadClass",

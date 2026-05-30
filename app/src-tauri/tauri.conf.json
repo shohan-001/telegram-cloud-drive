@@ -6,14 +6,14 @@
     },
     "updater": {
       "endpoints": [
-        "https://github.com/caamer20/Telegram-Drive/releases/latest/download/latest.json"
+        "https://github.com/shohan-001/telegram-cloud-drive/releases/latest/download/latest.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDUwN0I3MDBFMzQ5Nzk2M0MKUldROGxwYzBEbkI3VUwwOE13MURPOUtGWWVNTGNkaFZ3WEg0MHFoR0JMSlVjNXBwYksxWEhNMkoK"
     }
   },
   "productName": "Telegram Drive",
   "version": "1.7.0",
-  "identifier": "com.cameronamer.telegramdrive",
+  "identifier": "com.shohan.telegramdrive",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",

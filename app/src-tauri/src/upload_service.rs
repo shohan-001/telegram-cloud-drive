@@ -15,7 +15,7 @@ pub fn start_foreground_service() {
             ) {
                 Ok(class_loader_val) => {
                     if let Ok(class_loader) = class_loader_val.l() {
-                        let class_name = env.new_string("com.cameronamer.telegramdrive.UploadForegroundService");
+                        let class_name = env.new_string("com.shohan.telegramdrive.UploadForegroundService");
                         if let Ok(class_name_obj) = class_name {
                             let class_obj_val = env.call_method(
                                 &class_loader,
@@ -84,7 +84,7 @@ pub fn stop_foreground_service() {
             ) {
                 Ok(class_loader_val) => {
                     if let Ok(class_loader) = class_loader_val.l() {
-                        let class_name = env.new_string("com.cameronamer.telegramdrive.UploadForegroundService");
+                        let class_name = env.new_string("com.shohan.telegramdrive.UploadForegroundService");
                         if let Ok(class_name_obj) = class_name {
                             let class_obj_val = env.call_method(
                                 &class_loader,
