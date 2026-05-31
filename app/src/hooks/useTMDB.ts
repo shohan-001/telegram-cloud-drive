@@ -18,6 +18,9 @@ function cleanFileName(filename: string): string {
     // Remove extension
     let name = filename.replace(/\.[^/.]+$/, "");
     
+    // Remove telegram channel prefixes like @ChannelName-, [Channel], etc BEFORE replacing dots/underscores
+    name = name.replace(/^@[\w]+\s*-?\s*/i, '');
+    
     // Replace dots and underscores with spaces
     name = name.replace(/[\._]/g, ' ');
     
@@ -37,9 +40,6 @@ function cleanFileName(filename: string): string {
     // Trim extra spaces and brackets
     name = name.replace(/\[.*?\]/g, '');
     name = name.replace(/\(.*?\)/g, '');
-    
-    // Remove telegram channel prefixes like @ChannelName-
-    name = name.replace(/^@[\w\-]+\s*/i, '');
     
     // Final cleanup of extra spaces or dashes
     name = name.replace(/\s+/g, ' ').trim();
