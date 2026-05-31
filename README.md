@@ -40,8 +40,11 @@ If you want to build the app from source yourself:
    npm run tauri build
    ```
 
-## Acknowledgments
-This project is an ad-free fork and continuation. Original source code was developed by Cameron Amer and is available under the MIT License.
+## Acknowledgments & Special Thanks
+A massive and special thanks to the original creator, **Cameron Amer**, for developing the initial open-source version of this application. This repository is an ad-free fork and continuation of their incredible work.
 
-## License
-MIT License. See `LICENSE` file for details.
+## License & Copyright
+Copyright © 2024 Shohan
+Copyright © 2024 Cameron Amer (Original Author)
+
+This project is licensed under the MIT License. See the `LICENSE` file for full details.
