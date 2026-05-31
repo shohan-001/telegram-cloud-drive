@@ -22,10 +22,10 @@ function cleanFileName(filename: string): string {
     name = name.replace(/[\._]/g, ' ');
     
     // Remove resolutions, codecs, HDR, etc.
-    name = name.replace(/\b(1080p|720p|2160p|4k|x264|x265|hevc|h264|h265|bluray|web-dl|webrip|hdr|10bit)\b/gi, '');
+    name = name.replace(/\b(1080p|720p|2160p|4k|x264|x265|hevc|h264|h265|bluray|web-dl|webrip|hdr|10bit|dsnp)\b/gi, '');
     
-    // Extract Season/Episode (e.g., S01E01) and remove anything after it
-    const seMatch = name.match(/S\d+E\d+/i);
+    // Extract Season/Episode (e.g., S01E01 or E01) and remove anything after it
+    const seMatch = name.match(/(?:S\d+)?E\d+/i);
     if (seMatch && seMatch.index !== undefined) {
         name = name.substring(0, seMatch.index);
     }
@@ -38,7 +38,14 @@ function cleanFileName(filename: string): string {
     name = name.replace(/\[.*?\]/g, '');
     name = name.replace(/\(.*?\)/g, '');
     
-    return name.trim();
+    // Remove telegram channel prefixes like @ChannelName-
+    name = name.replace(/^@[\w\-]+\s*/i, '');
+    
+    // Final cleanup of extra spaces or dashes
+    name = name.replace(/\s+/g, ' ').trim();
+    name = name.replace(/^-+|-+$/g, '').trim();
+
+    return name;
 }
 
 export function useTMDB(filename: string, isVideo: boolean) {

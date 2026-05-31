@@ -4,7 +4,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { TelegramFile } from '../../../types';
 import { isVideoFile, isAudioFile } from '../../../utils';
 import { Plyr } from 'plyr-react';
-import 'plyr-react/plyr.css';
+import 'plyr/dist/plyr.css';
 
 interface StreamInfo {
     token: string;
