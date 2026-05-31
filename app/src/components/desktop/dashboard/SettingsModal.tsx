@@ -620,10 +620,37 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                                 </div>
                             </section>
 
-                            {/* Updates Section */}
+                            {/* Integrations Section */}
                             <section className="space-y-3">
                                 <h3 className="text-xs font-semibold text-telegram-subtext uppercase tracking-wider flex items-center gap-2">
                                     <Sparkles className="w-3.5 h-3.5" />
+                                    Integrations
+                                </h3>
+
+                                <div className="flex flex-col gap-2 p-3 rounded-lg bg-telegram-hover/50">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <Globe className="w-4 h-4 text-telegram-subtext" />
+                                            <div>
+                                                <p className="text-sm text-telegram-text font-medium">TMDB API Key</p>
+                                                <p className="text-xs text-telegram-subtext">Fetch movie/series posters and ratings</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input
+                                        type="password"
+                                        placeholder="Paste TMDB API Key here..."
+                                        value={settings.tmdbApiKey}
+                                        onChange={e => updateSetting('tmdbApiKey', e.target.value)}
+                                        className="w-full bg-telegram-bg border border-telegram-border rounded-md px-3 py-1.5 text-sm text-telegram-text focus:outline-none focus:border-telegram-primary/50 transition placeholder:text-telegram-subtext/40"
+                                    />
+                                </div>
+                            </section>
+
+                            {/* Updates Section */}
+                            <section className="space-y-3">
+                                <h3 className="text-xs font-semibold text-telegram-subtext uppercase tracking-wider flex items-center gap-2">
+                                    <Download className="w-3.5 h-3.5" />
                                     Updates
                                 </h3>
 

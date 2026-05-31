@@ -4,6 +4,7 @@ import { Folder, Eye, Trash2 } from 'lucide-react';
 import { invoke } from '@tauri-apps/api/core';
 import { TelegramFile } from '../../../types';
 import { FileTypeIcon } from '../../shared/FileTypeIcon';
+import { useTMDB } from '../../../hooks/useTMDB';
 
 interface FileCardProps {
     file: TelegramFile;
@@ -27,11 +28,18 @@ function isImageFile(filename: string): boolean {
     return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(ext);
 }
 
+function isVideoFile(filename: string): boolean {
+    const ext = filename.split('.').pop()?.toLowerCase() || '';
+    return ['mp4', 'mkv', 'avi', 'mov', 'wmv', 'flv', 'webm', 'ts', 'm4v'].includes(ext);
+}
+
 export function FileCard({ file, onDelete, onDownload, onPreview, isSelected, onClick, onContextMenu, onDrop, onDragStart, onDragEnd, activeFolderId, height, onToggleSelection }: FileCardProps) {
     const isFolder = file.type === 'folder';
     const [isDragOver, setIsDragOver] = useState(false);
     const [thumbnail, setThumbnail] = useState<string | null>(null);
     const [thumbnailLoading, setThumbnailLoading] = useState(false);
+    const isVideo = !isFolder && isVideoFile(file.name);
+    const { data: tmdbData } = useTMDB(file.name, isVideo);
 
     // Lazy load thumbnail for image files
     useEffect(() => {
@@ -102,7 +110,20 @@ export function FileCard({ file, onDelete, onDownload, onPreview, isSelected, on
                 style={height ? { height: `${height}px` } : { aspectRatio: '4/3' }}
             >
                 {/* Thumbnail or Icon */}
-                {thumbnail ? (
+                {tmdbData?.poster_path ? (
+                    <div className="absolute inset-0">
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500${tmdbData.poster_path}`}
+                            alt={tmdbData.title || tmdbData.name || file.name}
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-black/60 backdrop-blur text-xs font-medium text-yellow-400">
+                            <span>⭐</span>
+                            <span>{tmdbData.vote_average?.toFixed(1)}</span>
+                        </div>
+                    </div>
+                ) : thumbnail ? (
                     <div className="absolute inset-0">
                         <img
                             src={thumbnail}
@@ -136,9 +157,11 @@ export function FileCard({ file, onDelete, onDownload, onPreview, isSelected, on
                 </div>
 
                 {/* File info overlay at bottom */}
-                <div className={`absolute bottom-0 left-0 right-0 p-3 ${thumbnail ? 'text-white' : 'text-telegram-text'}`}>
-                    <h3 className="text-sm font-medium truncate w-full" title={file.name}>{file.name}</h3>
-                    <p className={`text-xs mt-0.5 ${thumbnail ? 'text-white/70' : 'text-telegram-subtext'}`}>{file.sizeStr}</p>
+                <div className={`absolute bottom-0 left-0 right-0 p-3 ${thumbnail || tmdbData ? 'text-white' : 'text-telegram-text'}`}>
+                    <h3 className="text-sm font-medium truncate w-full" title={file.name}>
+                        {tmdbData ? (tmdbData.title || tmdbData.name) : file.name}
+                    </h3>
+                    <p className={`text-xs mt-0.5 ${thumbnail || tmdbData ? 'text-white/70' : 'text-telegram-subtext'}`}>{file.sizeStr}</p>
                 </div>
 
                 {/* Quick actions on hover */}

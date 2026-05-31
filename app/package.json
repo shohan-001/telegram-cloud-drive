@@ -23,6 +23,8 @@
     "framer-motion": "^12.26.2",
     "lucide-react": "^0.562.0",
     "pdfjs-dist": "^5.6.205",
+    "plyr": "^3.8.4",
+    "plyr-react": "^6.0.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

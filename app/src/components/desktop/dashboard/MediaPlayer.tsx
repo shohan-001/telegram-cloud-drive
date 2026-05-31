@@ -3,6 +3,8 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { invoke } from '@tauri-apps/api/core';
 import { TelegramFile } from '../../../types';
 import { isVideoFile, isAudioFile } from '../../../utils';
+import { Plyr } from 'plyr-react';
+import 'plyr-react/plyr.css';
 
 interface StreamInfo {
     token: string;
@@ -98,11 +100,16 @@ export function MediaPlayer({ file, onClose, onNext, onPrev, currentIndex, total
                             <p>Preparing stream...</p>
                         </div>
                     ) : isVideo ? (
-                        <video
-                            src={streamUrl}
-                            controls
-                            autoPlay
-                            className="w-full h-full object-contain"
+                        <Plyr
+                            source={{
+                                type: 'video',
+                                sources: [{ src: streamUrl, provider: 'html5' }]
+                            }}
+                            options={{
+                                autoplay: true,
+                                controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+                                settings: ['captions', 'quality', 'speed', 'loop']
+                            }}
                         />
                     ) : isAudio ? (
                         <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-telegram-primary/20 to-black">

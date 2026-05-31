@@ -7,6 +7,7 @@ export interface Settings {
     maxConcurrentUploads: number;
     maxConcurrentDownloads: number;
     zipFolders: boolean;
+    tmdbApiKey: string;
 
     // ── Proxy ──────────────────────────────────────────────
     proxyEnabled: boolean;
@@ -45,6 +46,7 @@ const defaultSettings: Settings = {
     maxConcurrentUploads: 6,
     maxConcurrentDownloads: 6,
     zipFolders: true,
+    tmdbApiKey: '',
 
     // Proxy — off by default
     proxyEnabled: false,

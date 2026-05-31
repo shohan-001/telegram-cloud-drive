@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { Folder, Eye, HardDrive, Plus } from 'lucide-react';
 import { TelegramFile } from '../../../types';
 import { FileTypeIcon } from '../../shared/FileTypeIcon';
+import { useTMDB } from '../../../hooks/useTMDB';
+
+function isVideoFile(filename: string): boolean {
+    const ext = filename.split('.').pop()?.toLowerCase() || '';
+    return ['mp4', 'mkv', 'avi', 'mov', 'wmv', 'flv', 'webm', 'ts', 'm4v'].includes(ext);
+}
 
 interface FileListItemProps {
     file: TelegramFile;
@@ -23,6 +29,8 @@ export function FileListItem({
 }: FileListItemProps) {
     const [isDragOver, setIsDragOver] = useState(false);
     const isFolder = file.type === 'folder';
+    const isVideo = !isFolder && isVideoFile(file.name);
+    const { data: tmdbData } = useTMDB(file.name, isVideo);
 
     return (
         <div
@@ -67,8 +75,13 @@ export function FileListItem({
             <div className="flex justify-center">
                 {isFolder ? <Folder className="w-5 h-5 text-telegram-primary" /> : <FileTypeIcon filename={file.name} className="w-5 h-5" />}
             </div>
-            <div className="truncate text-sm text-telegram-text font-medium relative pr-8">
-                {file.name}
+            <div className="truncate text-sm text-telegram-text font-medium relative pr-8 flex items-center gap-2">
+                {tmdbData ? (tmdbData.title || tmdbData.name) : file.name}
+                {tmdbData?.vote_average && (
+                    <span className="text-[10px] bg-yellow-400/10 text-yellow-500 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                        ⭐ {tmdbData.vote_average.toFixed(1)}
+                    </span>
+                )}
                 {/* List Actions */}
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 flex items-center bg-telegram-surface border border-telegram-border shadow-lg rounded px-1">
                     <button onClick={(e) => { e.stopPropagation(); onPreview(file) }} className="p-1 hover:text-telegram-text text-telegram-subtext" title="Preview"><Eye className="w-4 h-4" /></button>
