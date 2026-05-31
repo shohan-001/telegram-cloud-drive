@@ -4,7 +4,7 @@ import { Folder, Eye, Trash2 } from 'lucide-react';
 import { invoke } from '@tauri-apps/api/core';
 import { TelegramFile } from '../../../types';
 import { FileTypeIcon } from '../../shared/FileTypeIcon';
-import { useTMDB } from '../../../hooks/useTMDB';
+import { useTMDB, getTMDBDisplayTitle } from '../../../hooks/useTMDB';
 
 interface FileCardProps {
     file: TelegramFile;
@@ -159,7 +159,7 @@ export function FileCard({ file, onDelete, onDownload, onPreview, isSelected, on
                 {/* File info overlay at bottom */}
                 <div className={`absolute bottom-0 left-0 right-0 p-3 ${thumbnail || tmdbData ? 'text-white' : 'text-telegram-text'}`}>
                     <h3 className="text-sm font-medium truncate w-full" title={file.name}>
-                        {tmdbData ? (tmdbData.title || tmdbData.name) : file.name}
+                        {getTMDBDisplayTitle(file.name, tmdbData)}
                     </h3>
                     <p className={`text-xs mt-0.5 ${thumbnail || tmdbData ? 'text-white/70' : 'text-telegram-subtext'}`}>{file.sizeStr}</p>
                 </div>

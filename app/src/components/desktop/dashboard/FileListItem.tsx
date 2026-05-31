@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Folder, Eye, HardDrive, Plus } from 'lucide-react';
 import { TelegramFile } from '../../../types';
 import { FileTypeIcon } from '../../shared/FileTypeIcon';
-import { useTMDB } from '../../../hooks/useTMDB';
+import { useTMDB, getTMDBDisplayTitle } from '../../../hooks/useTMDB';
 
 function isVideoFile(filename: string): boolean {
     const ext = filename.split('.').pop()?.toLowerCase() || '';
@@ -76,7 +76,7 @@ export function FileListItem({
                 {isFolder ? <Folder className="w-5 h-5 text-telegram-primary" /> : <FileTypeIcon filename={file.name} className="w-5 h-5" />}
             </div>
             <div className="truncate text-sm text-telegram-text font-medium relative pr-8 flex items-center gap-2">
-                {tmdbData ? (tmdbData.title || tmdbData.name) : file.name}
+                {getTMDBDisplayTitle(file.name, tmdbData)}
                 {tmdbData?.vote_average && (
                     <span className="text-[10px] bg-yellow-400/10 text-yellow-500 px-1.5 py-0.5 rounded flex items-center gap-0.5">
                         ⭐ {tmdbData.vote_average.toFixed(1)}

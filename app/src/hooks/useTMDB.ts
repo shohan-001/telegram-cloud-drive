@@ -14,6 +14,23 @@ export interface TMDBResult {
     media_type: 'movie' | 'tv';
 }
 
+export function getTMDBDisplayTitle(filename: string, tmdbData?: TMDBResult | null): string {
+    if (!tmdbData) return filename;
+
+    const baseName = tmdbData.title || tmdbData.name || filename;
+    const year = (tmdbData.release_date || tmdbData.first_air_date)?.substring(0, 4);
+    
+    // Extract Season/Episode from original filename (e.g. S01E01, E01)
+    const seMatch = filename.match(/(?:S\d+)?E\d+/i);
+    const epStr = seMatch ? seMatch[0].toUpperCase() : '';
+
+    let displayTitle = baseName;
+    if (year) displayTitle += ` (${year})`;
+    if (epStr) displayTitle += ` - ${epStr}`;
+
+    return displayTitle;
+}
+
 function cleanFileName(filename: string): string {
     // Remove extension
     let name = filename.replace(/\.[^/.]+$/, "");
