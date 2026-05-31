@@ -61,14 +61,6 @@ function AppContent() {
         }
       } catch (err) {
         console.warn("Session restore failed, showing login:", err);
-        // Session file is corrupt or revoked — clean up and show login
-        try {
-          const store = await load("config.json");
-          await store.delete("api_id");
-          await store.save();
-        } catch {
-          // best-effort cleanup
-        }
         setAuthStatus("unauthenticated");
       }
     };

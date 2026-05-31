@@ -94,6 +94,7 @@ export function AuthWizard({ onLogin }: { onLogin: () => void }) {
                 if (savedId && savedHash) {
                     setApiId(savedId);
                     setApiHash(savedHash);
+                    setStep("phone");
                 }
             } catch {
                 // config not found, starting fresh
