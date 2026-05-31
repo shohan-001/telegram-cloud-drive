@@ -20,8 +20,8 @@ export function getTMDBDisplayTitle(filename: string, tmdbData?: TMDBResult | nu
     const baseName = tmdbData.title || tmdbData.name || filename;
     const year = (tmdbData.release_date || tmdbData.first_air_date)?.substring(0, 4);
     
-    // Extract Season/Episode from original filename (e.g. S01E01, E01)
-    const seMatch = filename.match(/(?:S\d+)?E\d+/i);
+    // Extract Season/Episode from original filename (e.g. S01E01, S01, E01)
+    const seMatch = filename.match(/S\d+(?:E\d+)?|E\d+/i);
     const epStr = seMatch ? seMatch[0].toUpperCase() : '';
 
     let displayTitle = baseName;
@@ -44,8 +44,8 @@ function cleanFileName(filename: string): string {
     // Remove resolutions, codecs, HDR, etc.
     name = name.replace(/\b(1080p|720p|2160p|4k|x264|x265|hevc|h264|h265|bluray|web-dl|webrip|hdr|10bit|dsnp)\b/gi, '');
     
-    // Extract Season/Episode (e.g., S01E01 or E01) and remove anything after it
-    const seMatch = name.match(/(?:S\d+)?E\d+/i);
+    // Extract Season/Episode (e.g., S01E01, S01, or E01) and remove anything after it
+    const seMatch = name.match(/S\d+(?:E\d+)?|E\d+/i);
     if (seMatch && seMatch.index !== undefined) {
         name = name.substring(0, seMatch.index);
     }
