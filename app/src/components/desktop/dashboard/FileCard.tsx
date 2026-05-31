@@ -110,12 +110,12 @@ export function FileCard({ file, onDelete, onDownload, onPreview, isSelected, on
                 style={height ? { height: `${height}px` } : { aspectRatio: '4/3' }}
             >
                 {/* Thumbnail or Icon */}
-                {tmdbData?.poster_path ? (
+                {(tmdbData?.backdrop_path || tmdbData?.poster_path) ? (
                     <div className="absolute inset-0">
                         <img
-                            src={`https://image.tmdb.org/t/p/w500${tmdbData.poster_path}`}
+                            src={`https://image.tmdb.org/t/p/w500${tmdbData.backdrop_path || tmdbData.poster_path}`}
                             alt={tmdbData.title || tmdbData.name || file.name}
-                            className="w-full h-full object-cover"
+                            className={`w-full h-full object-cover ${!tmdbData.backdrop_path ? 'object-top' : ''}`}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                         <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-black/60 backdrop-blur text-xs font-medium text-yellow-400">
